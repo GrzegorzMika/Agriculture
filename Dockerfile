@@ -1,6 +1,6 @@
 FROM arm32v7/python:3.7-buster
 
-RUN mkdir /home/database
+RUN mkdir -p /home/database
 
 COPY . .
 
