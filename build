@@ -1,0 +1,2 @@
+docker volume create agriculture_database
+docker build -t synchronization --rm -f Dockerfile_synchronization .
