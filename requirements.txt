@@ -1,0 +1,2 @@
+google-cloud-storage==1.27.0
+pandas==1.0.3
