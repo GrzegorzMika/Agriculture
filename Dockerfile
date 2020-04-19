@@ -1,10 +1,12 @@
 # ---- GCP synchronization ----
-FROM arm32v7/python:3.7-buster as synchronization
+FROM arm32v7/python:3.7-slim as synchronization
 
-WORKDIR /database
+RUN apt-get update
 
-COPY . .
+COPY requirements.txt /database/requirements.txt
 
-RUN pip install -r requirements.txt
+RUN pip install -r /database/requirements.txt
 
-CMD ["python", "synchronize_gcp.py"]
+COPY . /database
+
+CMD ["python", "/database/synchronize_gcp.py"]
