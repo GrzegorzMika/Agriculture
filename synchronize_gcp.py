@@ -21,9 +21,8 @@ def establish_connection() -> storage.client.Client:
 def list_files_gcp(client: storage.client.Client, bucket_name: str) -> List[str]:
     """
     List all files in a bucket specified by argument bucket.
-    :param bucket_name:
     :param client: connection instance to GCP service
-    :param bucket: bucket name in which to list files
+    :param bucket_name: bucket name in which to list files
     :return: list of file names (without extension)
     """
     blobs = client.list_blobs(bucket_name)
@@ -74,10 +73,10 @@ def upload(client: storage.client.Client, file_names: List[str], bucket_name: st
 
 
 def main():
-    logging.basicConfig(filename='/home/database/log.log', level=logging.WARNING,
+    logging.basicConfig(filename='/database/log.log', level=logging.WARNING,
                         format='%(asctime)s %(levelname)s %(name)s %(message)s')
 
-    local_storage: str = '/home/database'
+    local_storage: str = '/database'
     bucket_name: str = 'lilia'
 
     client: storage.client.Client = establish_connection()

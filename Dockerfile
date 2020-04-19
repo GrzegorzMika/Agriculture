@@ -1,10 +1,11 @@
-FROM arm32v7/python:3.7-buster
+# ---- GCP synchronization ----
+FROM arm32v7/python:3.7-buster as synchronization
 
 RUN mkdir -p /home/database
 
-COPY . .
+COPY . /database
 
-WORKDIR /home/database
+WORKDIR /database
 
 RUN pip install -r requirements.txt
 
