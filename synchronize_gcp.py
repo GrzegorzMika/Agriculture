@@ -1,3 +1,4 @@
+import json
 import logging
 import os
 from typing import List
@@ -76,8 +77,11 @@ def main():
     logging.basicConfig(filename='/database/log.log', level=logging.WARNING,
                         format='%(asctime)s %(levelname)s %(name)s %(message)s')
 
-    local_storage: str = '/database'
-    bucket_name: str = 'lilia'
+    with open(find('setup', '/')) as f:
+        setup = json.load(f)
+
+    local_storage: str = setup.get('local_storage')
+    bucket_name: str = setup.get('bucket_name')
 
     client: storage.client.Client = establish_connection()
 
