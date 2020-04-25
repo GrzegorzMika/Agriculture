@@ -74,14 +74,14 @@ def upload(client: storage.client.Client, file_names: List[str], bucket_name: st
 
 
 def main():
-    logging.basicConfig(filename='/database/log.log', level=logging.WARNING,
-                        format='%(asctime)s %(levelname)s %(name)s %(message)s')
-
     with open(find('setup', '/')) as f:
         setup = json.load(f)
 
     local_storage: str = setup.get('local_storage')
     bucket_name: str = setup.get('bucket_name')
+
+    logging.basicConfig(filename=os.path.join(local_storage, 'log.log'), level=logging.WARNING,
+                        format='%(asctime)s %(levelname)s %(name)s %(message)s')
 
     client: storage.client.Client = establish_connection()
 
