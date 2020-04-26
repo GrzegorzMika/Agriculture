@@ -22,5 +22,27 @@
       "second": 0,
       "microsecond": 0
     }
+  },
+  "humidity": {
+    "humidity_port": 12,
+    "period": 60,
+    "wait": 0.998,
+    "exit_time": {
+      "hour": 23,
+      "minute": 45,
+      "second": 0,
+      "microsecond": 0
+    }
+  },
+  "light": {
+    "light_port": 4,
+    "period": 60,
+    "wait": 0.998,
+    "exit_time": {
+      "hour": 23,
+      "minute": 45,
+      "second": 0,
+      "microsecond": 0
+    }
   }
 }
