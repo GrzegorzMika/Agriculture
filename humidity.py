@@ -8,7 +8,7 @@ from utils import catch_measurement, save_measurement, find, exit_on_time
 
 
 def main():
-    with open(find('setup', '/')) as f:
+    with open(find('setup_agriculture.json', '/')) as f:
         setup = json.load(f)
 
     local_storage: str = setup.get('local_storage')

@@ -42,7 +42,7 @@ def run_cleanup(files: List[str], path: str) -> None:
 
 
 def main():
-    with open(find('setup', '/')) as f:
+    with open(find('setup_agriculture.json', '/')) as f:
         setup = json.load(f)
 
     local_storage: str = setup.get('local_storage')

@@ -74,7 +74,7 @@ def upload(client: storage.client.Client, file_names: List[str], bucket_name: st
 
 
 def main():
-    with open(find('setup', '/')) as f:
+    with open(find('setup_agriculture.json', '/')) as f:
         setup = json.load(f)
 
     local_storage: str = setup.get('local_storage')
