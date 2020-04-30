@@ -1,7 +1,7 @@
 # ---- moisture measurements ----
-FROM arm32v7/python:3.7-slim as moisture
+FROM arm32v7/python:3.7-slim
 
-RUN apt-get update
+RUN apt-get update &&  apt install build-essential && apt-get install gcc
 
 COPY requirements.txt /database/requirements.txt
 
