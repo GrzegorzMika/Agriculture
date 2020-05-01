@@ -1,6 +1,6 @@
-00 00 * * * docker run -v agriculture_database:/home/database --rm  moisture
-00 00 * * * docker run -v agriculture_database:/home/database --rm  temperature
-00 00 * * * docker run -v agriculture_database:/home/database --rm  humidity
-00 00 * * * docker run -v agriculture_database:/home/database --rm  light
-47 23 * * * docker run -v agriculture_database:/home/database --rm  synchronization
-52 23 * * * docker run -v agriculture_database:/home/database --rm  cleaner
+00 00 * * * nohup python Agriculture/moisture.py
+00 00 * * * nohup python Agriculture/temperature.py
+00 00 * * * nohup python Agriculture/humidity.py
+00 00 * * * nohup python Agriculture/light.py
+47 23 * * * nohup python Agriculture/synchronize_gcp.py
+52 23 * * * nohup python Agriculture/cleaner.py
