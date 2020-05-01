@@ -19,6 +19,17 @@ def find_txt(path: str) -> List[str]:
     return files
 
 
+def pop_files(local_list: List[str], drop_files: List[str]) -> List[str]:
+    """
+    Drop from a list of files, files specified by drop_files.
+    :param local_list: list of files
+    :param drop_files: list of files to be omitted
+    :return: list of files without specified files
+    """
+    files: List[str] = [f for f in local_list if f not in drop_files]
+    return files
+
+
 def compress_file(filename: str, path: str) -> None:
     """
     Compress a given file to to pickle format.
@@ -46,11 +57,13 @@ def main():
         setup = json.load(f)
 
     local_storage: str = setup.get('local_storage')
+    drop_files: List[str] = setup.get('drop_files')
 
     logging.basicConfig(filename=os.path.join(local_storage, 'log.log'), level=logging.WARNING,
                         format='%(asctime)s %(levelname)s %(name)s %(message)s')
 
     files: List[str] = find_txt(local_storage)
+    files = pop_files(files, drop_files)
     for file in files:
         try:
             compress_file(file, local_storage)

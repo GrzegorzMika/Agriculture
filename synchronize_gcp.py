@@ -52,6 +52,17 @@ def compare_lists(local_list: List[str], remote_list: List[str]) -> List[str]:
     return list(set(local_list) - set(remote_list))
 
 
+def pop_files(local_list: List[str], drop_files: List[str]) -> List[str]:
+    """
+    Drop from a list of files, files specified by drop_files.
+    :param local_list: list of files
+    :param drop_files: list of files to be omitted
+    :return: list of files without specified files
+    """
+    files: List[str] = [f for f in local_list if f not in drop_files]
+    return files
+
+
 def upload(client: storage.client.Client, file_names: List[str], bucket_name: str, path: str):
     """
     Upload a specified files to a given bucket in Google Cloud Storage instance.
@@ -79,6 +90,7 @@ def main():
 
     local_storage: str = setup.get('local_storage')
     bucket_name: str = setup.get('bucket_name')
+    drop_files: List[str] = setup.get('drop_files')
 
     logging.basicConfig(filename=os.path.join(local_storage, 'log.log'), level=logging.WARNING,
                         format='%(asctime)s %(levelname)s %(name)s %(message)s')
@@ -88,6 +100,7 @@ def main():
     local_list: List[str] = list_files_local(local_storage)
     remote_list: List[str] = list_files_gcp(client, bucket_name=bucket_name)
     files_to_upload: List[str] = compare_lists(local_list, remote_list)
+    files_to_upload = pop_files(files_to_upload, drop_files)
 
     upload(client, files_to_upload, bucket_name, local_storage)
 

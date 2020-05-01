@@ -1,5 +1,6 @@
 {
- "local_storage": "/database",
+ "local_storage": "/home/pi/database",
+  "pop_files": ["requirements.txt"],
  "bucket_name": "lilia",
  "moisture": {
     "moisture_port": 0,
