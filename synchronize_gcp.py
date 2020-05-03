@@ -74,7 +74,7 @@ def upload(client: storage.client.Client, file_names: List[str], bucket_name: st
     bucket = client.bucket(bucket_name)
     for file in file_names:
         try:
-            data = pd.read_pickle(os.path.join(path, file + '.pkl.gz'), compression="gzip")
+            data = pd.read_pickle(os.path.join(path, file + '.pkl'), compression="gzip")
             f = StringIO()
             data.to_csv(f, index_label=False)
             f.seek(0)

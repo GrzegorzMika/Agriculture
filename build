@@ -1,7 +1,0 @@
-docker volume create agriculture_database
-docker build -t synchronization --rm -f Dockerfile_synchronization .
-docker build -t moisture --rm -f Dockerfile_moisture .
-docker build -t temperature --rm -f Dockerfile_temperature .
-docker build -t humidity --rm -f Dockerfile_humidity .
-docker build -t light --rm -f Dockerfile_light .
-docker build -t cleaner --rm -f Dockerfile_cleaner .
