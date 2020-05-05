@@ -4,7 +4,7 @@
  "bucket_name": "lilia",
  "moisture": {
     "moisture_port": 0,
-    "period": 60,
+    "period": 20,
     "wait": 0.998,
     "exit_time": {
       "hour": 23,
@@ -15,7 +15,7 @@
  },
   "temperature": {
     "temperature_port": 12,
-    "period": 60,
+    "period": 20,
     "wait": 0.998,
     "exit_time": {
       "hour": 23,
