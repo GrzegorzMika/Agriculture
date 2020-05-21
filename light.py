@@ -1,16 +1,13 @@
-import json
+import logging
 import logging
 import os
 from datetime import date
 
 from sensors import Light
-from utils import catch_measurement, save_measurement, find, exit_on_time
+from utils import catch_measurement, save_measurement, exit_on_time
 
 
-def main():
-    with open(find('setup_agriculture.json', '/')) as f:
-        setup = json.load(f)
-
+def light(setup: dict):
     local_storage: str = setup.get('local_storage')
 
     logging.basicConfig(filename=os.path.join(local_storage, 'log.log'), level=logging.WARNING,
@@ -31,8 +28,3 @@ def main():
                          path=os.path.join(local_storage, 'light_' + str(date.today()) + '.txt'))
 
     quit()
-
-
-if __name__ == '__main__':
-    main()
-
