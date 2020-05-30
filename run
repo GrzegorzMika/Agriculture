@@ -1,0 +1,1 @@
+docker run --privileged -d -v agriculture_test:/home/pi/database agriculture_test

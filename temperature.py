@@ -1,5 +1,4 @@
 import logging
-import logging
 import os
 from datetime import date
 
@@ -8,10 +7,12 @@ from utils import catch_measurement, save_measurement, exit_on_time
 
 
 def temperature(setup: dict):
+    log_storage = setup.get('log_storage')
     local_storage: str = setup.get('local_storage')
 
-    logging.basicConfig(filename=os.path.join(local_storage, 'log.log'), level=logging.WARNING,
+    logging.basicConfig(filename=os.path.join(log_storage, 'log.log'), level=logging.WARNING,
                         format='%(asctime)s %(levelname)s %(name)s %(message)s')
+    logger = logging.getLogger(__name__)
 
     temperature_port: int = setup['temperature'].get('temperature_port')
     period: int = setup['temperature'].get('period')

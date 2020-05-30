@@ -6,15 +6,17 @@ from sensors import Moisture
 from utils import catch_measurement, save_measurement, exit_on_time
 
 
-def moisture(setup: dict):
-    local_storage: str = setup.get('local_storage')
+def moisture(setup):
+    log_storage = setup.get('log_storage')
+    local_storage = setup.get('local_storage')
 
-    logging.basicConfig(filename=os.path.join(local_storage, 'log.log'), level=logging.WARNING,
+    logging.basicConfig(filename=os.path.join(log_storage, 'log.log'), level=logging.WARNING,
                         format='%(asctime)s %(levelname)s %(name)s %(message)s')
+    logger = logging.getLogger(__name__)
 
-    moisture_port: int = setup['moisture'].get('moisture_port')
-    period: int = setup['moisture'].get('period')
-    wait: float = setup['moisture'].get('wait')
+    moisture_port = setup['moisture'].get('moisture_port')
+    period = setup['moisture'].get('period')
+    wait = setup['moisture'].get('wait')
 
     moisture_sensor = Moisture(moisture_port)
 

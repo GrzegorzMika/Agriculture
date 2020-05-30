@@ -3,17 +3,23 @@ import os
 import time
 from datetime import datetime
 
+from grove.grove_moisture_sensor import GroveMoistureSensor
 
-def find(name, path):
-    """
-    Find a file specified by name starting from path.
-    :param name: name of the file to be found
-    :param path: starting location
-    :return: path to the file starting from path
-    """
-    for root, dirs, files in os.walk(path):
-        if name in files:
-            return os.path.join(root, name)
+
+class Moisture:
+    def __init__(self, port):
+        """
+        Wrapper for Grove Moisture sensor.
+        :param port: port to which the sensor is connected
+        """
+        self.sensor = GroveMoistureSensor(port)
+
+    @property
+    def measurement(self):
+        """
+        Get value of the measurement
+        """
+        return self.sensor.moisture
 
 
 def catch_measurement(sensor, period, wait):
@@ -30,7 +36,7 @@ def catch_measurement(sensor, period, wait):
         try:
             measurement_temporary.append(sensor.measurement)
         except Exception as e:
-            logging.error(e)
+            logging.error(e, exc_info=True)
         finally:
             time.sleep(wait)
     measurement = sum(measurement_temporary) / len(measurement_temporary)
@@ -48,15 +54,25 @@ def save_measurement(measurement, path):
         try:
             f.write('{}, {}\n'.format(now.strftime("%Y-%m-%d %H:%M:%S"), measurement))
         except Exception as e:
-            logging.error(e)
+            logging.error(e, exc_info=True)
 
 
-def exit_on_time(exit_time):
-    """
-    Verify if the time condition specified by exit_time is met.
-    :param exit_time: reference time
-    :return: boolean indicating if before reference time (true) or after (false)
-    """
-    now = datetime.now()
-    leave_time = now.replace(**exit_time)
-    return now < leave_time
+path = "/home/pi/database"
+
+moisture_sensor = Moisture(port=0)
+
+try:
+    files = os.listdir(path)
+    files = [f for f in files if 'test' in f]
+    files = [f.split('.')[0] for f in files]
+    files = [int(f.split('_')[1]) for f in files]
+    run = max(files) + 1
+except:
+    run = 1
+
+with open(os.path.join(path, 'test_' + str(run) + '.txt'), 'w+') as f:
+    f.write('Timestamp, Moisture\n')
+
+measurement = catch_measurement(sensor=moisture_sensor, period=60, wait=2)
+save_measurement(measurement=measurement,
+                 path=os.path.join(path, 'test_' + str(run) + '.txt'))

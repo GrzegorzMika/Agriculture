@@ -11,13 +11,12 @@ class Sensor(metaclass=ABCMeta):
         ...
 
     @abstractmethod
-    @property
-    def measurement(self) -> float:
+    def measurement(self):
         ...
 
 
 class Moisture(Sensor):
-    def __init__(self, port: int):
+    def __init__(self, port):
         """
         Wrapper for Grove Moisture sensor.
         :param port: port to which the sensor is connected
@@ -26,7 +25,7 @@ class Moisture(Sensor):
         self.sensor = GroveMoistureSensor(port)
 
     @property
-    def measurement(self) -> float:
+    def measurement(self):
         """
         Get value of the measurement
         """
@@ -34,7 +33,7 @@ class Moisture(Sensor):
 
 
 class Temperature(Sensor):
-    def __init__(self, port: int):
+    def __init__(self, port):
         """
         Wrapper for Grove Temperature sensor.
         :param port: port to which the sensor is connected
@@ -43,7 +42,7 @@ class Temperature(Sensor):
         self.sensor = DHT("11", port)
 
     @property
-    def measurement(self) -> float:
+    def measurement(self):
         """
         Get value of the measurement
         """
@@ -52,7 +51,7 @@ class Temperature(Sensor):
 
 
 class Humidity(Sensor):
-    def __init__(self, port: int):
+    def __init__(self, port):
         """
         Wrapper for Grove Humidity sensor.
         :param port: port to which the sensor is connected
@@ -61,7 +60,7 @@ class Humidity(Sensor):
         self.sensor = DHT("11", port)
 
     @property
-    def measurement(self) -> float:
+    def measurement(self):
         """
         Get value of the measurement
         """
@@ -70,7 +69,7 @@ class Humidity(Sensor):
 
 
 class Light(Sensor):
-    def __init__(self, port: int):
+    def __init__(self, port):
         """
         Wrapper for Grove Light sensor.
         :param port: port to which the sensor is connected
@@ -79,7 +78,7 @@ class Light(Sensor):
         self.sensor = GroveLightSensor(port)
 
     @property
-    def measurement(self) -> float:
+    def measurement(self):
         """
         Get value of the measurement
         """

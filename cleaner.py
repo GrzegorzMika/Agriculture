@@ -1,14 +1,13 @@
 import json
 import logging
-from typing import List
+import os
 
 import pandas as pd
-import os
 
 from utils import find
 
 
-def find_txt(path: str) -> List[str]:
+def find_txt(path):
     """
     List all txt files in a given directory.
     :param path: path to the directory
@@ -19,18 +18,18 @@ def find_txt(path: str) -> List[str]:
     return files
 
 
-def pop_files(local_list: List[str], drop_files: List[str]) -> List[str]:
+def pop_files(local_list, drop_files):
     """
     Drop from a list of files, files specified by drop_files.
     :param local_list: list of files
     :param drop_files: list of files to be omitted
     :return: list of files without specified files
     """
-    files: List[str] = [f for f in local_list if f not in drop_files]
+    files = [f for f in local_list if f not in drop_files]
     return files
 
 
-def compress_file(filename: str, path: str) -> None:
+def compress_file(filename, path):
     """
     Compress a given file to to pickle format.
     :param filename: name of the file
@@ -41,7 +40,7 @@ def compress_file(filename: str, path: str) -> None:
     df.to_pickle(os.path.join(path, new_name + '.pkl'), compression='gzip')
 
 
-def run_cleanup(files: List[str], path: str) -> None:
+def run_cleanup(files, path):
     """
     Remove all files specified by files.
     :param files: list of files to remove
@@ -52,28 +51,23 @@ def run_cleanup(files: List[str], path: str) -> None:
         os.remove(file)
 
 
-def main():
-    with open(find('setup_agriculture.json', '/')) as f:
-        setup = json.load(f)
+def cleaner(setup: dict):
+    log_storage = setup.get('log_storage')
+    local_storage = setup.get('local_storage')
+    drop_files = setup.get('drop_files')
 
-    local_storage: str = setup.get('local_storage')
-    drop_files: List[str] = setup.get('drop_files')
-
-    logging.basicConfig(filename=os.path.join(local_storage, 'log.log'), level=logging.WARNING,
+    logging.basicConfig(filename=os.path.join(log_storage, 'log.log'), level=logging.WARNING,
                         format='%(asctime)s %(levelname)s %(name)s %(message)s')
+    logger = logging.getLogger(__name__)
 
-    files: List[str] = find_txt(local_storage)
+    files = find_txt(local_storage)
     files = pop_files(files, drop_files)
     for file in files:
         try:
             compress_file(file, local_storage)
         except Exception as e:
-            logging.error(e)
+            logger.error(e, exc_info=True)
     try:
         run_cleanup(files, local_storage)
     except Exception as e:
-        logging.error(e)
-
-
-if __name__ == '__main__':
-    main()
+        logger.error(e, exc_info=True)

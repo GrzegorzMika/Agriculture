@@ -81,19 +81,18 @@ def upload(client: storage.client.Client, file_names: List[str], bucket_name: st
             blob = bucket.blob(file + '.csv')
             blob.upload_from_file(f, content_type='text/csv')
         except Exception as e:
-            logging.error(e)
+            logger.error(e, exc_info=True)
 
 
-def main():
-    with open(find('setup_agriculture.json', '/')) as f:
-        setup = json.load(f)
-
+def synchronize_gcp(setup):
+    log_storage = setup.get('log_storage')
     local_storage: str = setup.get('local_storage')
     bucket_name: str = setup.get('bucket_name')
     drop_files: List[str] = setup.get('drop_files')
 
-    logging.basicConfig(filename=os.path.join(local_storage, 'log.log'), level=logging.WARNING,
+    logging.basicConfig(filename=os.path.join(log_storage, 'log.log'), level=logging.WARNING,
                         format='%(asctime)s %(levelname)s %(name)s %(message)s')
+    logger = logging.getLogger(__name__)
 
     client: storage.client.Client = establish_connection()
 
@@ -103,7 +102,3 @@ def main():
     files_to_upload = pop_files(files_to_upload, drop_files)
 
     upload(client, files_to_upload, bucket_name, local_storage)
-
-
-if __name__ == '__main__':
-    main()
