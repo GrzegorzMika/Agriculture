@@ -20,6 +20,8 @@ WORKDIR grove.py
 
 RUN pip install .
 
+RUN mkdir /home/pi/logs
+
 WORKDIR /home/pi/database
 
 COPY grove_test.py grove_test.py
