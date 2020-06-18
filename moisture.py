@@ -22,13 +22,16 @@ def main():
 
     moisture_sensor = Moisture(moisture_port)
 
-    with open(os.path.join(local_storage, 'moisture_' + str(date.today()) + '.txt'), 'w+') as f:
-        f.write('Timestamp, Moisture\n')
+    filename = os.path.join(local_storage, 'moisture_' + str(date.today()) + '.txt')
+
+    if not os.path.exists(filename):
+        with open(filename, 'w+') as f:
+            f.write('Timestamp, Moisture\n')
 
     while exit_on_time(setup['moisture'].get('exit_time')):
         measurement = catch_measurement(sensor=moisture_sensor, period=period, wait=wait)
         save_measurement(measurement=measurement,
-                         path=os.path.join(local_storage, 'moisture_' + str(date.today()) + '.txt'))
+                         path=filename)
 
     quit()
 

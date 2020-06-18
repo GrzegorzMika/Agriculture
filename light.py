@@ -22,13 +22,16 @@ def main():
 
     light_sensor = Light(light_port)
 
-    with open(os.path.join(local_storage, 'light_' + str(date.today()) + '.txt'), 'w+') as f:
-        f.write('Timestamp, Light\n')
+    filename = os.path.join(local_storage, 'light_' + str(date.today()) + '.txt')
+
+    if not os.path.exists(filename):
+        with open(filename, 'w+') as f:
+            f.write('Timestamp, Light\n')
 
     while exit_on_time(setup['light'].get('exit_time')):
         measurement = catch_measurement(sensor=light_sensor, period=period, wait=wait)
         save_measurement(measurement=measurement,
-                         path=os.path.join(local_storage, 'light_' + str(date.today()) + '.txt'))
+                         path=filename)
 
     quit()
 

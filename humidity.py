@@ -22,13 +22,16 @@ def main():
 
     humidity_sensor = Humidity(humidity_port)
 
-    with open(os.path.join(local_storage, 'humidity_' + str(date.today()) + '.txt'), 'w+') as f:
-        f.write('Timestamp, Humidity\n')
+    filename = os.path.join(local_storage, 'humidity_' + str(date.today()) + '.txt')
+
+    if not os.path.exists(filename):
+        with open(filename, 'w+') as f:
+            f.write('Timestamp, Humidity\n')
 
     while exit_on_time(setup['humidity'].get('exit_time')):
         measurement = catch_measurement(sensor=humidity_sensor, period=period, wait=wait)
         save_measurement(measurement=measurement,
-                         path=os.path.join(local_storage, 'humidity_' + str(date.today()) + '.txt'))
+                         path=filename)
 
     quit()
 

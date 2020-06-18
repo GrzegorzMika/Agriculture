@@ -1,6 +1,6 @@
 00 00 * * * nohup python3 Agriculture/moisture.py
 00 00 * * * nohup python3 Agriculture/temperature.py
 00 00 * * * nohup python3 Agriculture/humidity.py
-00 00 * * * nohup python3 Agriculture/light.py
+00 00 * * * conda
 47 23 * * * nohup python3 Agriculture/cleaner.py
 52 23 * * * nohup python3 Agriculture/synchronize_gcp.py
